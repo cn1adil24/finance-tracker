@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
 import com.vcoding.financetracker.transaction.dto.TransactionResponse;
+import com.vcoding.financetracker.transaction.exception.TransactionNotFoundException;
 import com.vcoding.financetracker.transaction.model.Transaction;
 
 @Service
@@ -43,7 +44,7 @@ public class TransactionService {
     public TransactionResponse getById(Long id) {
         Transaction txn = store.get(id);
         if (txn == null) {
-            throw new RuntimeException("Transaction not found: " + id);
+            throw new TransactionNotFoundException(id);
         }
 
         return toResponse(txn);
