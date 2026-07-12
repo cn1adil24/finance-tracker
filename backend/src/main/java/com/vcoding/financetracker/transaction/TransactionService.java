@@ -1,62 +1,68 @@
 package com.vcoding.financetracker.transaction;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
 import com.vcoding.financetracker.transaction.dto.TransactionResponse;
+import com.vcoding.financetracker.transaction.entity.TransactionEntity;
 import com.vcoding.financetracker.transaction.exception.TransactionNotFoundException;
-import com.vcoding.financetracker.transaction.model.Transaction;
+import com.vcoding.financetracker.transaction.repository.TransactionRepository;
 
 @Service
 public class TransactionService {
 
-    private final Map<Long, Transaction> store = new HashMap<>();
-    private long idCounter = 1;
+    private final TransactionRepository transactionRepository;
+
+    public TransactionService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
 
     public TransactionResponse create(CreateTransactionRequest request) {
-        Long id = idCounter++;
+        TransactionEntity entity = new TransactionEntity();
+        entity.setAmount(request.amount());
+        entity.setDescription(request.description());
+        entity.setTimestamp(request.timestamp());
+        entity.setType(request.type());
 
-        Transaction txn = new Transaction(
-            id,
-            request.amount(),
-            request.description(),
-            request.timestamp(),
-            request.type()
-        );
+        TransactionEntity savedEntity = transactionRepository.save(entity);
 
-        store.put(id, txn);
-
-        return toResponse(txn);
+        return toResponse(savedEntity);
     }
 
     public List<TransactionResponse> getAll() {
-        return store.values()
-                    .stream()
-                    .map(this::toResponse)
-                    .collect(Collectors.toList());
+        return transactionRepository.findAll()
+                                    .stream()
+                                    .map(this::toResponse)
+                                    .collect(Collectors.toList());
     }
 
     public TransactionResponse getById(Long id) {
-        Transaction txn = store.get(id);
-        if (txn == null) {
-            throw new TransactionNotFoundException(id);
-        }
+        TransactionEntity txn = 
+            transactionRepository
+                .findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException(id));
 
         return toResponse(txn);
     }
 
-    private TransactionResponse toResponse(Transaction txn) {
+    public void delete(Long id) {
+        TransactionEntity entity = transactionRepository
+            .findById(id)
+            .orElseThrow(() -> new TransactionNotFoundException(id));
+
+        transactionRepository.delete(entity);
+    }
+
+    private TransactionResponse toResponse(TransactionEntity entity) {
         return new TransactionResponse(
-            txn.getId(),
-            txn.getAmount(),
-            txn.getDescription(),
-            txn.getTimestamp(),
-            txn.getType()
+            entity.getId(),
+            entity.getAmount(),
+            entity.getDescription(),
+            entity.getTimestamp(),
+            entity.getType()
         );
     }
 }
