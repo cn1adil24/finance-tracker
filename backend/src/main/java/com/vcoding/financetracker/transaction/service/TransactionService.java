@@ -1,4 +1,4 @@
-package com.vcoding.financetracker.transaction;
+package com.vcoding.financetracker.transaction.service;
 
 import java.util.List;
 import java.util.stream.Collectors;

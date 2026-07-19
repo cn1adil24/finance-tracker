@@ -16,7 +16,11 @@ public class TransactionEntity {
     private Long id;
 
 
-    @Column(nullable = false)
+    @Column(
+        nullable = false,
+        precision = 10,
+        scale = 2
+    )
     private BigDecimal amount;
 
 
