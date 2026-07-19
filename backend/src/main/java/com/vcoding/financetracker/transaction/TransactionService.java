@@ -9,33 +9,32 @@ import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
 import com.vcoding.financetracker.transaction.dto.TransactionResponse;
 import com.vcoding.financetracker.transaction.entity.TransactionEntity;
 import com.vcoding.financetracker.transaction.exception.TransactionNotFoundException;
+import com.vcoding.financetracker.transaction.mapper.TransactionMapper;
 import com.vcoding.financetracker.transaction.repository.TransactionRepository;
 
 @Service
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
+    private final TransactionMapper mapper;
 
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository, TransactionMapper mapper) {
         this.transactionRepository = transactionRepository;
+        this.mapper = mapper;
     }
 
     public TransactionResponse create(CreateTransactionRequest request) {
-        TransactionEntity entity = new TransactionEntity();
-        entity.setAmount(request.amount());
-        entity.setDescription(request.description());
-        entity.setTimestamp(request.timestamp());
-        entity.setType(request.type());
+        TransactionEntity entity = mapper.toEntity(request);
 
         TransactionEntity savedEntity = transactionRepository.save(entity);
 
-        return toResponse(savedEntity);
+        return mapper.toResponse(savedEntity);
     }
 
     public List<TransactionResponse> getAll() {
         return transactionRepository.findAll()
                                     .stream()
-                                    .map(this::toResponse)
+                                    .map(mapper::toResponse)
                                     .collect(Collectors.toList());
     }
 
@@ -45,7 +44,7 @@ public class TransactionService {
                 .findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException(id));
 
-        return toResponse(txn);
+        return mapper.toResponse(txn);
     }
 
     public void delete(Long id) {
@@ -54,15 +53,5 @@ public class TransactionService {
             .orElseThrow(() -> new TransactionNotFoundException(id));
 
         transactionRepository.delete(entity);
-    }
-
-    private TransactionResponse toResponse(TransactionEntity entity) {
-        return new TransactionResponse(
-            entity.getId(),
-            entity.getAmount(),
-            entity.getDescription(),
-            entity.getTimestamp(),
-            entity.getType()
-        );
     }
 }
