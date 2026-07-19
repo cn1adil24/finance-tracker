@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
 import com.vcoding.financetracker.transaction.dto.TransactionResponse;
+import com.vcoding.financetracker.transaction.dto.UpdateTransactionRequest;
 import com.vcoding.financetracker.transaction.entity.TransactionEntity;
 
 @Component
@@ -31,5 +32,15 @@ public class TransactionMapper {
             entity.getTimestamp(),
             entity.getType()
         );
+    }
+
+    public void updateEntity(
+        TransactionEntity entity,
+        UpdateTransactionRequest request
+    ) {
+        entity.setAmount(request.amount());
+        entity.setDescription(request.description());
+        entity.setTimestamp(request.timestamp());
+        entity.setType(request.type());
     }
 }

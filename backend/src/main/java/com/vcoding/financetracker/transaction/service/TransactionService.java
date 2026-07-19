@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
 import com.vcoding.financetracker.transaction.dto.TransactionResponse;
+import com.vcoding.financetracker.transaction.dto.UpdateTransactionRequest;
 import com.vcoding.financetracker.transaction.entity.TransactionEntity;
 import com.vcoding.financetracker.transaction.exception.TransactionNotFoundException;
 import com.vcoding.financetracker.transaction.mapper.TransactionMapper;
@@ -53,5 +54,17 @@ public class TransactionService {
             .orElseThrow(() -> new TransactionNotFoundException(id));
 
         transactionRepository.delete(entity);
+    }
+
+    public TransactionResponse update(Long id, UpdateTransactionRequest request) {
+        TransactionEntity entity = transactionRepository
+            .findById(id)
+            .orElseThrow(() -> new TransactionNotFoundException(id));
+
+        mapper.updateEntity(entity, request);
+
+        TransactionEntity savedEntity = transactionRepository.save(entity);
+        
+        return mapper.toResponse(savedEntity);
     }
 }
