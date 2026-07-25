@@ -18,6 +18,8 @@ import com.vcoding.financetracker.transaction.dto.TransactionResponse;
 import com.vcoding.financetracker.transaction.dto.UpdateTransactionRequest;
 import com.vcoding.financetracker.transaction.service.TransactionService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
@@ -28,7 +30,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public TransactionResponse create(@RequestBody CreateTransactionRequest request) {
+    public TransactionResponse create(@Valid @RequestBody CreateTransactionRequest request) {
         return transactionService.create(request);
     }
 
@@ -45,7 +47,7 @@ public class TransactionController {
     @PutMapping("/{id}")
     public TransactionResponse update(
         @PathVariable Long id,
-        @RequestBody UpdateTransactionRequest request) {
+        @Valid @RequestBody UpdateTransactionRequest request) {
             return transactionService.update(id, request);
     }
 

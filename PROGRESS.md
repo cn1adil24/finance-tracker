@@ -120,13 +120,13 @@
 
 ### Validation
 
-* [ ] Bean Validation
-* [ ] @Valid
-* [ ] @NotNull
-* [ ] @NotBlank
-* [ ] @Positive
-* [ ] Custom validation messages
-* [ ] Validation exception handling
+* [x] Bean Validation
+* [x] @Valid
+* [x] @NotNull
+* [x] @NotBlank
+* [x] @Positive
+* [x] Custom validation messages
+* [x] Validation exception handling
 
 ### Pagination
 
@@ -291,4 +291,4 @@ Implemented features:
 * Dockerized development database
 
 Current next milestone:
-**Phase 3 — Validation**
+**Phase 3 — Pagination, Sorting, Filtering, Searching**

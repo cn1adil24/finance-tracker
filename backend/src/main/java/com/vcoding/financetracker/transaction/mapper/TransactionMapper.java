@@ -15,7 +15,7 @@ public class TransactionMapper {
     ) {
         TransactionEntity entity = new TransactionEntity();
         entity.setAmount(request.amount());
-        entity.setDescription(request.description());
+        entity.setDescription(request.description().trim());
         entity.setTimestamp(request.timestamp());
         entity.setType(request.type());
 
@@ -39,7 +39,7 @@ public class TransactionMapper {
         UpdateTransactionRequest request
     ) {
         entity.setAmount(request.amount());
-        entity.setDescription(request.description());
+        entity.setDescription(request.description().trim());
         entity.setTimestamp(request.timestamp());
         entity.setType(request.type());
     }
