@@ -1,8 +1,28 @@
 # AI Agent Instructions for finance-tracker
 
-## What this repository contains
-- A minimal repository scaffold with `README.md`, `LICENSE`, and Git metadata.
-- No application source code, build scripts, or tests are present yet.
+## Current stack
+- Backend: Java 25, Spring Boot 3.5, Gradle
+- Persistence: Spring Data JPA + PostgreSQL
+- Validation: Bean Validation
+- API docs: springdoc OpenAPI
+- Observability: Spring Boot Actuator
+
+## Build and run
+- Backend: cd backend && ./gradlew bootRun
+- Tests: cd backend && ./gradlew test
+- Docker database: cd docker && docker compose up -d
+
+## Project structure
+- backend/src/main/java/com/vcoding/financetracker/api
+- backend/src/main/java/com/vcoding/financetracker/common
+- backend/src/main/java/com/vcoding/financetracker/transaction
+
+## Conventions
+- Keep feature-based packages
+- Keep DTOs separate from entities
+- Use BigDecimal for money
+- Use custom exceptions and a global exception handler
+- Do not change the Docker lifecycle scripts unless the task explicitly requires it
 
 ## How to use this repository
 - Before making changes, verify the actual project language/framework once source files are added.
@@ -15,7 +35,3 @@
   - the main framework or runtime
   - build/test commands
   - folder layout and key entry points
-
-## Notes
-- There are no documented commands or conventions in this repo yet.
-- The only documentation present is `README.md`, which is currently a placeholder.
