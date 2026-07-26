@@ -137,14 +137,14 @@
 
 ### Pagination
 
-* [ ] Pageable
-* [ ] Page<T>
-* [ ] Pagination metadata
+* [x] Pageable
+* [x] Page<T>
+* [x] Pagination metadata
 
 ### Sorting
 
-* [ ] Sorting by fields
-* [ ] Ascending / Descending
+* [x] Sorting by fields
+* [x] Ascending / Descending
 
 ### Filtering
 
