@@ -1,5 +1,10 @@
 package com.vcoding.financetracker.api;
 
+import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
+import com.vcoding.financetracker.transaction.dto.TransactionResponse;
+import com.vcoding.financetracker.transaction.dto.UpdateTransactionRequest;
+import com.vcoding.financetracker.transaction.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,47 +18,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
-import com.vcoding.financetracker.transaction.dto.TransactionResponse;
-import com.vcoding.financetracker.transaction.dto.UpdateTransactionRequest;
-import com.vcoding.financetracker.transaction.service.TransactionService;
-
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
-    private final TransactionService transactionService;
+  private final TransactionService transactionService;
 
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
+  public TransactionController(TransactionService transactionService) {
+    this.transactionService = transactionService;
+  }
 
-    @PostMapping
-    public TransactionResponse create(@Valid @RequestBody CreateTransactionRequest request) {
-        return transactionService.create(request);
-    }
+  @PostMapping
+  public TransactionResponse create(@Valid @RequestBody CreateTransactionRequest request) {
+    return transactionService.create(request);
+  }
 
-    @GetMapping
-    public Page<TransactionResponse> getAll(Pageable page) {
-        return transactionService.getAll(page);
-    }
+  @GetMapping
+  public Page<TransactionResponse> getAll(Pageable page) {
+    return transactionService.getAll(page);
+  }
 
-    @GetMapping("/{id}")
-    public TransactionResponse getById(@PathVariable Long id) {
-        return transactionService.getById(id);
-    }
+  @GetMapping("/{id}")
+  public TransactionResponse getById(@PathVariable Long id) {
+    return transactionService.getById(id);
+  }
 
-    @PutMapping("/{id}")
-    public TransactionResponse update(
-        @PathVariable Long id,
-        @Valid @RequestBody UpdateTransactionRequest request) {
-            return transactionService.update(id, request);
-    }
+  @PutMapping("/{id}")
+  public TransactionResponse update(
+      @PathVariable Long id, @Valid @RequestBody UpdateTransactionRequest request) {
+    return transactionService.update(id, request);
+  }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        transactionService.delete(id);  
-    }
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    transactionService.delete(id);
+  }
 }

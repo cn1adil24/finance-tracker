@@ -1,9 +1,5 @@
 package com.vcoding.financetracker.transaction.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.vcoding.financetracker.transaction.dto.CreateTransactionRequest;
 import com.vcoding.financetracker.transaction.dto.TransactionResponse;
 import com.vcoding.financetracker.transaction.dto.UpdateTransactionRequest;
@@ -11,57 +7,55 @@ import com.vcoding.financetracker.transaction.entity.TransactionEntity;
 import com.vcoding.financetracker.transaction.exception.TransactionNotFoundException;
 import com.vcoding.financetracker.transaction.mapper.TransactionMapper;
 import com.vcoding.financetracker.transaction.repository.TransactionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionService {
 
-    private final TransactionRepository transactionRepository;
-    private final TransactionMapper mapper;
+  private final TransactionRepository transactionRepository;
+  private final TransactionMapper mapper;
 
-    public TransactionService(TransactionRepository transactionRepository, TransactionMapper mapper) {
-        this.transactionRepository = transactionRepository;
-        this.mapper = mapper;
-    }
+  public TransactionService(TransactionRepository transactionRepository, TransactionMapper mapper) {
+    this.transactionRepository = transactionRepository;
+    this.mapper = mapper;
+  }
 
-    public TransactionResponse create(CreateTransactionRequest request) {
-        TransactionEntity entity = mapper.toEntity(request);
+  public TransactionResponse create(CreateTransactionRequest request) {
+    TransactionEntity entity = mapper.toEntity(request);
 
-        TransactionEntity savedEntity = transactionRepository.save(entity);
+    TransactionEntity savedEntity = transactionRepository.save(entity);
 
-        return mapper.toResponse(savedEntity);
-    }
+    return mapper.toResponse(savedEntity);
+  }
 
-    public Page<TransactionResponse> getAll(Pageable page) {
-        return transactionRepository.findAll(page)
-                                    .map(mapper::toResponse);
-    }
+  public Page<TransactionResponse> getAll(Pageable page) {
+    return transactionRepository.findAll(page).map(mapper::toResponse);
+  }
 
-    public TransactionResponse getById(Long id) {
-        TransactionEntity txn = 
-            transactionRepository
-                .findById(id)
-                .orElseThrow(() -> new TransactionNotFoundException(id));
+  public TransactionResponse getById(Long id) {
+    TransactionEntity txn =
+        transactionRepository.findById(id).orElseThrow(() -> new TransactionNotFoundException(id));
 
-        return mapper.toResponse(txn);
-    }
+    return mapper.toResponse(txn);
+  }
 
-    public void delete(Long id) {
-        TransactionEntity entity = transactionRepository
-            .findById(id)
-            .orElseThrow(() -> new TransactionNotFoundException(id));
+  public void delete(Long id) {
+    TransactionEntity entity =
+        transactionRepository.findById(id).orElseThrow(() -> new TransactionNotFoundException(id));
 
-        transactionRepository.delete(entity);
-    }
+    transactionRepository.delete(entity);
+  }
 
-    public TransactionResponse update(Long id, UpdateTransactionRequest request) {
-        TransactionEntity entity = transactionRepository
-            .findById(id)
-            .orElseThrow(() -> new TransactionNotFoundException(id));
+  public TransactionResponse update(Long id, UpdateTransactionRequest request) {
+    TransactionEntity entity =
+        transactionRepository.findById(id).orElseThrow(() -> new TransactionNotFoundException(id));
 
-        mapper.updateEntity(entity, request);
+    mapper.updateEntity(entity, request);
 
-        TransactionEntity savedEntity = transactionRepository.save(entity);
-        
-        return mapper.toResponse(savedEntity);
-    }
+    TransactionEntity savedEntity = transactionRepository.save(entity);
+
+    return mapper.toResponse(savedEntity);
+  }
 }
