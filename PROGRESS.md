@@ -128,16 +128,23 @@
 * [x] Custom validation messages
 * [x] Validation exception handling
 
+### Code Quality / Tooling
+
+* [ ] Add Lombok dependency
+* [ ] Refactor entities with @Getter/@Setter
+* [ ] Refactor DTOs with @Getter/@Setter/@AllArgsConstructor/@Builder
+* [ ] Remove manual boilerplate
+
 ### Pagination
 
-* [ ] Pageable
-* [ ] Page<T>
-* [ ] Pagination metadata
+* [x] Pageable
+* [x] Page<T>
+* [x] Pagination metadata
 
 ### Sorting
 
-* [ ] Sorting by fields
-* [ ] Ascending / Descending
+* [x] Sorting by fields
+* [x] Ascending / Descending
 
 ### Filtering
 
@@ -156,11 +163,51 @@
 * [ ] Consistent API error responses
 * [ ] Better HTTP semantics
 * [ ] ResponseEntity usage
+* [ ] springdoc-openapi dependency
+* [ ] Swagger UI endpoint
+* [ ] Annotate controllers/DTOs for OpenAPI docs
+
+### Observability
+
+* [ ] Spring Boot Actuator
+* [ ] Replace/augment custom HealthController
+* [ ] Basic metrics endpoint
 
 ---
 
-# ⏳ Phase 4 — Security
+# ⏳ Phase 4 — Testing
 
+* [ ] JUnit 5
+* [ ] Mockito
+* [ ] MockMvc
+* [ ] Repository tests
+* [ ] Controller tests
+* [ ] Service layer unit tests
+
+---
+
+# ⏳ Phase 5 — Database Migrations
+
+* [ ] Flyway setup
+* [ ] Baseline migration for existing schema
+* [ ] Database versioning
+* [ ] Replace ddl-auto with managed migrations
+
+---
+
+# ⏳ Phase 6 — Domain Features
+
+* [ ] Category entity
+* [ ] Transaction ↔ Category relationship
+* [ ] Budgets per category
+* [ ] Recurring transactions
+* [ ] Monthly summaries / reports endpoint
+
+---
+
+# ⏳ Phase 7 — Security
+
+* [ ] CORS configuration
 * [ ] Spring Security
 * [ ] Authentication
 * [ ] Authorization
@@ -173,10 +220,8 @@
 
 ---
 
-# ⏳ Phase 5 — Advanced Persistence
+# ⏳ Phase 8 — Advanced Persistence
 
-* [ ] Flyway migrations
-* [ ] Database versioning
 * [ ] Relationships
 * [ ] One-to-Many
 * [ ] Many-to-One
@@ -189,19 +234,7 @@
 
 ---
 
-# ⏳ Phase 6 — Testing
-
-* [ ] JUnit 5
-* [ ] Mockito
-* [ ] MockMvc
-* [ ] Integration testing
-* [ ] Testcontainers
-* [ ] Repository tests
-* [ ] Controller tests
-
----
-
-# ⏳ Phase 7 — Performance
+# ⏳ Phase 9 — Performance
 
 * [ ] Database indexing
 * [ ] Query optimization
@@ -214,7 +247,15 @@
 
 ---
 
-# ⏳ Phase 8 — React Frontend
+# ⏳ Phase 10 — Integration Testing
+
+* [ ] Testcontainers
+* [ ] Full-stack integration tests
+* [ ] Security-aware test scenarios
+
+---
+
+# ⏳ Phase 11 — React Frontend
 
 ### React
 
@@ -241,7 +282,7 @@
 
 ---
 
-# ⏳ Phase 9 — DevOps
+# ⏳ Phase 12 — DevOps
 
 * [ ] Dockerize Spring Boot
 * [ ] Multi-container Docker Compose
@@ -256,7 +297,7 @@
 
 ---
 
-# ⏳ Phase 10 — Advanced Spring
+# ⏳ Phase 13 — Advanced Spring
 
 * [ ] Spring Events
 * [ ] Scheduling
@@ -291,4 +332,4 @@ Implemented features:
 * Dockerized development database
 
 Current next milestone:
-**Phase 3 — Pagination, Sorting, Filtering, Searching**
+**Phase 3 — Lombok adoption, then Pagination, Sorting, Filtering, Searching, then OpenAPI docs**
